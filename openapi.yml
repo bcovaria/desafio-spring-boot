@@ -1,0 +1,95 @@
+openapi: 3.0.1
+info:
+  title: Task Manager API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/tareas:
+    get:
+      summary: Obtener todas las tareas
+      responses:
+        '200':
+          description: Lista de tareas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TareaModel'
+    post:
+      summary: Crear nueva tarea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TareaModel'
+      responses:
+        '200':
+          description: Tarea creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TareaModel'
+  /api/tareas/{id}:
+    get:
+      summary: Obtener tarea por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tarea encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TareaModel'
+    put:
+      summary: Actualizar tarea por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TareaModel'
+      responses:
+        '200':
+          description: Tarea actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TareaModel'
+    delete:
+      summary: Eliminar tarea por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Eliminada exitosamente
+components:
+  schemas:
+    TareaModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        estadoNombre:
+          type: string
